@@ -7,7 +7,7 @@ describe("Home", () => {
     render(
       <UserCard
         user={{
-          name: "John Doe",
+          name: "John Doe 1",
           email: "john@gmail.com",
         }}
       />,
