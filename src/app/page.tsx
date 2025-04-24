@@ -14,12 +14,17 @@ export default async function Home() {
 }
 
 const GetUser = async () => {
-  const response = await fetch(`http://localhost:5001/user`);
-  const user = await response.json();
+  // const response = await fetch(`http://localhost:5001/user`);
+  // const user = await response.json();
 
   return (
     <MyConfetti>
-      <UserCard user={user} />
+      <UserCard
+        user={{
+          name: "John Doe",
+          email: "john@doe.com",
+        }}
+      />
     </MyConfetti>
   );
 };
