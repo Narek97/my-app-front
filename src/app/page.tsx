@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import Loading from "@/app/loading";
 import MyConfetti from "@/components/my-confetti";
+import UserCard from "@/components/user-card";
 
 export default async function Home() {
   return (
@@ -11,15 +12,6 @@ export default async function Home() {
     </div>
   );
 }
-
-const UserCard = ({ user }: { user: { name: string; email: string } }) => {
-  return (
-    <div className="bg-white shadow-md rounded-lg p-4">
-      <h2 className="text-gray-700 font-bold">{user.name}</h2>
-      <p className="text-gray-700">{user.email}</p>
-    </div>
-  );
-};
 
 const GetUser = async () => {
   const response = await fetch(`${process.env.NEXT_API_URL}/user`);

@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: dockerfile
+      args:
+        NEXT_API_URL: ${NEXT_API_URL}
+    image: narek97/myapp-front
+    ports:
+      - "3000:3000"

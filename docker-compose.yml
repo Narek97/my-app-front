@@ -1,0 +1,44 @@
+#version: '3.8'
+#
+#services:
+#  frontend:
+#    image: front
+#    build:
+#      context: .
+#      dockerfile: dockerfile
+#      args:
+#        NEXT_API_URL: http://localhost:5001
+#    ports:
+#      - "3000:3000"
+#    environment:
+#      - NEXT_API_URL=http://localhost:5001
+#    restart: unless-stopped
+
+
+#version: '3.8'
+#
+#services:
+#  frontend:
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#      args:
+#        NEXT_API_URL: ${NEXT_API_URL}
+#    image: narek97/front-app:${TAG:-latest}
+#    container_name: front-app
+#    restart: always
+#    env_file:
+#      - /Users/narekbabayan/Desktop/devops/nest-next-deployment/.env_front
+
+
+version: '3.8'
+
+services:
+  front-app:
+    image: narek97/myapp-front:1
+    container_name: myapp-front
+    env_file:
+      - /Users/narekbabayan/Desktop/devops/nest-next-deployment/.env_front
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
