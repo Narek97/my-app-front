@@ -14,7 +14,8 @@ export default async function Home() {
 }
 
 const GetUser = async () => {
-  const response = await fetch(`${process.env.NEXT_API_URL}/user`);
+  const url = process.env.NEXT_API_URL || "http://localhost:5001";
+  const response = await fetch(`${url}/user`);
   const user = await response.json();
 
   return (
