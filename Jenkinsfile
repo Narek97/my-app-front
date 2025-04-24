@@ -8,20 +8,6 @@ pipeline {
             }
         }
 
-        stage('Build') {
-            agent {
-                docker {
-                    image 'node:20-alpine' // Use any Node.js version you need
-                    reuseNode true
-                }
-            }
-            steps {
-                echo 'Building the application inside Docker...'
-                sh 'yarn install'
-                sh 'yarn build'
-            }
-        }
-
        stage('Lint') {
            agent {
                docker {
@@ -50,6 +36,19 @@ pipeline {
            }
        }
 
+        stage('Build') {
+            agent {
+                docker {
+                    image 'node:20-alpine' // Use any Node.js version you need
+                    reuseNode true
+                }
+            }
+            steps {
+                echo 'Building the application inside Docker...'
+                sh 'yarn install'
+                sh 'yarn build'
+            }
+        }
 
         stage('Deploy') {
             steps {
