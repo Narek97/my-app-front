@@ -9,11 +9,16 @@ pipeline {
         }
 
         stage('Build') {
+            agent {
+                docker {
+                    image 'node:20-alpine' // Use any Node.js version you need
+                    args '-u root:root'    // Optional: run as root to avoid permission issues
+                }
+            }
             steps {
-                echo 'Building the application...'
-                // Example:
-                // sh 'npm install'
-                // sh 'mvn clean package'
+                echo 'Building the application inside Docker...'
+                sh 'yarn install'
+                sh 'yarn build'
             }
         }
 
