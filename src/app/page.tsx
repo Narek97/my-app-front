@@ -16,7 +16,7 @@ export default async function Home() {
 const GetUser = async () => {
   // const response = await fetch(`http://localhost:5001/user`);
   // const user = await response.json();
-
+  const a = 1;
   return (
     <MyConfetti>
       <UserCard
