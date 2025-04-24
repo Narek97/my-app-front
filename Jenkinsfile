@@ -12,7 +12,7 @@ pipeline {
             agent {
                 docker {
                     image 'node:20-alpine' // Use any Node.js version you need
-                    args '-u root:root'    // Optional: run as root to avoid permission issues
+                    reuseNode true
                 }
             }
             steps {
@@ -22,24 +22,34 @@ pipeline {
             }
         }
 
-        stage('Lint') {
-            steps {
-                echo 'Checking code style (lint)...'
-                // Replace with your lint command:
-                // sh 'npm run lint'
-                // sh './gradlew lint'
-                // sh 'flake8 .'
-            }
-        }
+       stage('Lint') {
+           agent {
+               docker {
+                   image 'node:20-alpine'
+                   reuseNode true
+               }
+           }
+           steps {
+               echo 'Checking code style (lint)...'
+               sh 'yarn install'       // Ensure dependencies are installed
+               sh 'yarn lint'
+           }
+       }
 
-        stage('Test') {
-            steps {
-                echo 'Running tests...'
-                // Example:
-                // sh 'npm test'
-                // sh 'mvn test'
-            }
-        }
+       stage('Test') {
+           agent {
+               docker {
+                   image 'node:20-alpine'
+                   reuseNode true
+               }
+           }
+           steps {
+               echo 'Running tests...'
+               sh 'yarn install'       // Optional: if not sharing volume/cache
+               sh 'yarn test'
+           }
+       }
+
 
         stage('Deploy') {
             steps {
