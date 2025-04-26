@@ -6,7 +6,6 @@ pipeline {
             steps {
                 echo 'Checking out the application...'
                 git branch: 'main',
-                    credentialsId: 'github-credentials',
                     url: 'https://github.com/your-username/your-repo.git'
             }
         }
