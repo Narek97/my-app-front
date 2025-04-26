@@ -4,42 +4,45 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                echo 'Checkout the application...'
+                echo 'Checking out the application...'
+                git branch: 'main',
+                    credentialsId: 'github-credentials',
+                    url: 'https://github.com/your-username/your-repo.git'
             }
         }
 
-       stage('Lint') {
-           agent {
-               docker {
-                   image 'node:20-alpine'
-                   reuseNode true
-               }
-           }
-           steps {
-               echo 'Checking code style (lint)...'
-               sh 'yarn install'       // Ensure dependencies are installed
-               sh 'yarn lint'
-           }
-       }
+        stage('Lint') {
+            agent {
+                docker {
+                    image 'node:20-alpine'
+                    reuseNode true
+                }
+            }
+            steps {
+                echo 'Checking code style (lint)...'
+                sh 'yarn install'
+                sh 'yarn lint'
+            }
+        }
 
-       stage('Test') {
-           agent {
-               docker {
-                   image 'node:20-alpine'
-                   reuseNode true
-               }
-           }
-           steps {
-               echo 'Running tests...'
-               sh 'yarn install'       // Optional: if not sharing volume/cache
-               sh 'yarn test'
-           }
-       }
+        stage('Test') {
+            agent {
+                docker {
+                    image 'node:20-alpine'
+                    reuseNode true
+                }
+            }
+            steps {
+                echo 'Running tests...'
+                sh 'yarn install'
+                sh 'yarn test'
+            }
+        }
 
         stage('Build') {
             agent {
                 docker {
-                    image 'node:20-alpine' // Use any Node.js version you need
+                    image 'node:20-alpine'
                     reuseNode true
                 }
             }
@@ -52,11 +55,8 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                echo 'Deploying application...'
-                // Replace with your actual deployment command
-                // sh './deploy.sh'
-                // sh 'scp build.zip user@server:/var/www/'
-                // sh 'kubectl apply -f deployment.yaml'
+                echo 'Deploying application to S3...'
+//                 sh 'aws s3 sync build/ s3://your-bucket-name --delete'
             }
         }
     }
