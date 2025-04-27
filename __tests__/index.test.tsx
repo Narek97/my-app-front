@@ -13,7 +13,7 @@ describe("Home", () => {
       />,
     );
 
-    const heading = screen.getByRole("heading1", { level: 1 });
+    const heading = screen.getByRole("heading", { level: 1 });
 
     expect(heading).toBeInTheDocument();
   });
